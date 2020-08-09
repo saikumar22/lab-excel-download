@@ -1,6 +1,9 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,12 +11,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
+import model.Prograd;
+import service.ExcelGenerator;
+
 
 @WebServlet(urlPatterns = { "/prograd" })
 public class ProgradDetailsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 // Uncomment the below line
-	//List<Prograd> list = new ArrayList<Prograd>();
+	List<Prograd> list = new ArrayList<Prograd>();
 	RequestDispatcher rd;
 	public ProgradDetailsController() {
 		super();
@@ -28,7 +36,7 @@ public class ProgradDetailsController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/* uncomment the code below to see the final output
+		// uncomment the code below to see the final output
 		String name = request.getParameter("name");
 		String id = request.getParameter("id");
 		String rate=request.getParameter("rating");
@@ -43,6 +51,8 @@ public class ProgradDetailsController extends HttpServlet {
 		
 		
 		Prograd prograd = new Prograd(name, id, rate, recom1, comment);
+
+
 		if (recom1 != null)
 			prograd.setRecommend(recom1);
 		if (recom2 != null)
@@ -53,6 +63,7 @@ public class ProgradDetailsController extends HttpServlet {
 			prograd.setRecommend(recom4);
 		if (recom5 != null)
 			prograd.setRecommend(recom5);
+
 		
 		prograd.setName(name);
 		prograd.setId(id);
@@ -60,14 +71,17 @@ public class ProgradDetailsController extends HttpServlet {
 		prograd.setRate(rate);
 	
 		list.add(prograd);
+
 		if (submit != null) {
 			rd = this.getServletContext().getRequestDispatcher("/WEB-INF/views/result.jsp");
 			rd.forward(request, response);
 		}
+
 		if (download != null) {
 			response.setContentType("application/octet-stream");
-			response.setHeader("Content-Disposition", "attachment;filename=prograd.xlsx");
+			response.setHeader("Content-Disposition", "attachment;filename=lab.xlsx");
 		}
+
 		ExcelGenerator excel=new ExcelGenerator();
 		HSSFWorkbook hwb = excel.excelGenerate(prograd,list);
 		System.out.println(hwb);
@@ -75,6 +89,5 @@ public class ProgradDetailsController extends HttpServlet {
 				request.setAttribute("upload_message", "File downloaded successfully");
 				rd = this.getServletContext().getRequestDispatcher("/WEB-INF/views/result.jsp");
 				rd.forward(request, response);
-*/
 	}
 }

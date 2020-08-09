@@ -35,7 +35,6 @@ public class TestPrograd {
 			pro.setRecommend(null);
 			pro.setComment(null);
 		}
-		
 		catch (Exception e) {
 			e.printStackTrace();
 		}
